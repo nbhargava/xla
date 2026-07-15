@@ -795,8 +795,8 @@ TEST(PjrtCApiGpuMaxInflightComputationsTest, ValidOptionsParsing) {
       {"max_inflight_computations", static_cast<int64_t>(64)},
       {"visible_devices", xla::PjRtValueType(std::vector<int64_t>{0})},
   };
-  TF_ASSERT_OK_AND_ASSIGN(std::vector<PJRT_NamedValue> c_options,
-                          ::pjrt::ConvertToPjRtNamedValueList(options));
+  ASSERT_OK_AND_ASSIGN(std::vector<PJRT_NamedValue> c_options,
+                       ::pjrt::ConvertToPjRtNamedValueList(options));
   PJRT_Client_Create_Args create_arg;
   create_arg.struct_size = PJRT_Client_Create_Args_STRUCT_SIZE;
   create_arg.extension_start = nullptr;
@@ -829,8 +829,8 @@ TEST(PjrtCApiGpuMaxInflightComputationsTest, InvalidOptionsParsing) {
     absl::flat_hash_map<std::string, xla::PjRtValueType> options = {
         {"max_inflight_computations", invalid_value},
     };
-    TF_ASSERT_OK_AND_ASSIGN(std::vector<PJRT_NamedValue> c_options,
-                            ::pjrt::ConvertToPjRtNamedValueList(options));
+    ASSERT_OK_AND_ASSIGN(std::vector<PJRT_NamedValue> c_options,
+                         ::pjrt::ConvertToPjRtNamedValueList(options));
     PJRT_Client_Create_Args create_arg;
     create_arg.struct_size = PJRT_Client_Create_Args_STRUCT_SIZE;
     create_arg.extension_start = nullptr;
